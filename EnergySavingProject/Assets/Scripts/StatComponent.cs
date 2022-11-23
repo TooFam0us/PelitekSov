@@ -6,6 +6,9 @@ using UnityEngine;
 public class StatComponent : MonoBehaviour
 {
 
+    GameManager gm;
+    UIManager um;
+
     public enum CharacterStat
     { 
         Hunger,
@@ -13,14 +16,20 @@ public class StatComponent : MonoBehaviour
         Education
     }
 
-    Dictionary<CharacterStat, float> CharacterStats = new Dictionary<CharacterStat, float>();
+    Dictionary<CharacterStat, float> CharacterStats = new();
 
     private void Start()
     {
+        gm = GameManager.Instance;
+        um = UIManager.Instance;
         // Initialize character stats
         foreach(CharacterStat stat in Enum.GetValues(typeof(CharacterStat)))
         {
-            CharacterStats.Add(stat, 100);
+            if(!CharacterStats.ContainsKey(stat))
+            {
+                CharacterStats.Add(stat, 100);
+                um.UpdateStats((int)stat ,CharacterStats[stat]);
+            }
         }
     }
 
@@ -31,6 +40,11 @@ public class StatComponent : MonoBehaviour
         if(CharacterStats.ContainsKey(stat))
         {
             CharacterStats[stat] += change;
+            um.UpdateStats((int)stat, CharacterStats[stat]);
+            if (CharacterStats[stat] < gm.statMinThreshold)
+            {
+                gm.LoseGame();
+            }
         }
         else
         {
@@ -45,7 +59,11 @@ public class StatComponent : MonoBehaviour
             if(CharacterStats.ContainsKey(stat))
             {
                 CharacterStats[stat] += change;
-                Debug.Log(CharacterStats[stat]);
+                um.UpdateStats((int)stat, CharacterStats[stat]);
+                if(CharacterStats[stat] < gm.statMinThreshold)
+                {
+                    gm.LoseGame();
+                }
             }
         }
     }

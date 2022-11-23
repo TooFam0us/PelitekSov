@@ -14,15 +14,19 @@ public class TimeHandler : MonoBehaviour
 
     string clock;
 
+    GameManager gm;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gm = GameManager.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gm.IsGameOver())
+            return;
         timeInSeconds += Time.deltaTime;
         gameTimeSeconds = Mathf.FloorToInt(timeInSeconds * 100);
         gameTimeMinutes = Mathf.FloorToInt(gameTimeSeconds / 60);
@@ -32,10 +36,14 @@ public class TimeHandler : MonoBehaviour
         UIManager.Instance.UpdateClock(clock);
 
         // Subjects to change every 2 hour (game-tick) (stats, electricity costs)
-        if(gameTimeHours % 2 == 0 && gameTimeHours > pastCheck)
+        if(gameTimeHours % gm.intervalBetweenStatChanges == 0 && gameTimeHours > pastCheck)
         {
-            StatComponent.Instance.ChangeAllStats(-5);
+            StatComponent.Instance.ChangeAllStats(Random.Range(-3, -8));
             pastCheck = gameTimeHours;
+        }
+        if(gameTimeDays >= gm.daysToWinGame)
+        {
+            gm.WinGame();
         }
     }
 }
