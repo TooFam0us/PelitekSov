@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class TimeHandler : MonoBehaviour
 {
-    float timeInSeconds;
-    int gameTimeSeconds;
-    int gameTimeMinutes;
-    int gameTimeHours;
-    int gameTimeDays;
+    float timeInSeconds = 0;
+    int gameTimeSeconds = 0;
+    int gameTimeMinutes = 0;
+    int gameTimeHours = 0;
+    int gameTimeDays = 0;
+
+    int pastCheck = 0;
 
     string clock;
 
@@ -28,5 +30,12 @@ public class TimeHandler : MonoBehaviour
         gameTimeDays = Mathf.FloorToInt(gameTimeHours / 24);
         clock = string.Format("Day {0}, {1:D2}:{2:D2}", (gameTimeDays % 24) + 1, gameTimeHours % 60, gameTimeMinutes % 60);
         UIManager.Instance.UpdateClock(clock);
+
+        // Subjects to change every 2 hour (game-tick) (stats, electricity costs)
+        if(gameTimeHours % 2 == 0 && gameTimeHours > pastCheck)
+        {
+            StatComponent.Instance.ChangeAllStats(-5);
+            pastCheck = gameTimeHours;
+        }
     }
 }
