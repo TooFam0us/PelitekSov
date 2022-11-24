@@ -32,7 +32,7 @@ public class TimeHandler : MonoBehaviour
         gameTimeMinutes = Mathf.FloorToInt(gameTimeSeconds / 60);
         gameTimeHours = Mathf.FloorToInt(gameTimeMinutes / 60);
         gameTimeDays = Mathf.FloorToInt(gameTimeHours / 24);
-        clock = string.Format("Day {0}, {1:D2}:{2:D2}", (gameTimeDays % 24) + 1, gameTimeHours % 60, gameTimeMinutes % 60);
+        clock = string.Format("Day {0}, {1:D2}:{2:D2}", gameTimeDays + 1, gameTimeHours % 24, gameTimeMinutes % 60);
         UIManager.Instance.UpdateClock(clock);
 
         // Subjects to change every 2 hour (game-tick) (stats, electricity costs)
