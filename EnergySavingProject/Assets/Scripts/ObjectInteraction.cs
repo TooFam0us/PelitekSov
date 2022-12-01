@@ -8,6 +8,8 @@ public class ObjectInteraction : MonoBehaviour
 {
 
     public GameObject obj;
+    public float amount;
+    public StatComponent.CharacterStat stat;
 
     void Start()
     {
@@ -16,11 +18,12 @@ public class ObjectInteraction : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
         {
             if (obj == getClickedObject(out RaycastHit hit))
             {
-                Debug.Log("Toimii :)");
+                // Change stats
+                StatComponent.Instance.ChangeCharacterStat(stat, amount);
             }
         }
     }
