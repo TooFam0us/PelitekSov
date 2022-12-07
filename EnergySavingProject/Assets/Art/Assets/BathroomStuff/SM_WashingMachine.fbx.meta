@@ -13,12 +13,12 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: T_WashingMachine
-    second: {fileID: 2800000, guid: f49e368d8e5b7c840bc7fdfcdc425958, type: 3}
+    second: {fileID: 2800000, guid: d9cecb6726871b2459b0e01ef5cc4d9d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: T_WashingMachine_nor
-    second: {fileID: 2800000, guid: 9248fb6c1b495814aa9bf890532a721e, type: 3}
+    second: {fileID: 2800000, guid: b6f924d2078c54446976836bc4efd658, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
