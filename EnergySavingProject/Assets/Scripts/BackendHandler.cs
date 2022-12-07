@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class BackendHandler : MonoBehaviour
 {
 
-    // JSON testiä:
+    // JSON test
 
     const string jsonTestStr = "{ " +
     "\"scores\":[ " +
@@ -21,23 +21,24 @@ public class BackendHandler : MonoBehaviour
     "] }";
 
 
-    const string urlBackendHighScoresFile = "http://localhost/Unity-PHP-backend/api/v1/highscores.json";
-    const string urlBackendHighScores = "http://localhost/Unity-PHP-backend/api/v1/highscores.php";
+    const string urlBackendHighScoresFile = "http://172.30.139.22/~narvanen/highscores.json";
+    const string urlBackendHighScores = "http://172.30.139.22/~narvanen/highscores.php";
 
 
-    
+
+
+
     HighScores.HighScores hs = null;
 
 
-    // esittelyt tähän:
 
 
-    string log = ""; 
+    string log = "";
     int fetchCounter = 0;
     bool updateHighScoreTextArea = false;
 
 
-    // UI:
+    // UI elements:
 
     public UnityEngine.UI.Text loggingText;
     public UnityEngine.UI.Text highScoresTextArea;
@@ -57,7 +58,7 @@ public class BackendHandler : MonoBehaviour
         InsertToLog("Game started");
     }
 
-    
+
     void Update()
     {
         loggingText.text = log;
@@ -72,9 +73,9 @@ public class BackendHandler : MonoBehaviour
     {
         string hsList = "";
 
-        if(hs != null)
+        if (hs != null)
         {
-            int len = (hs.scores.Length < 3) ? hs.scores.Length: 3;
+            int len = (hs.scores.Length < 10) ? hs.scores.Length : 10;
             for (int i = 0; i < len; i++)
             {
                 //hsList += hs.scores[i].playername + ": \t" +
@@ -90,7 +91,7 @@ public class BackendHandler : MonoBehaviour
 
 
     // BUTTONEIDEN KÄSITTELYÄ:
-
+    // GetJSONFile
     public void FetchHighScoresJSONFile()
     {
         fetchCounter++;
@@ -120,7 +121,7 @@ public class BackendHandler : MonoBehaviour
             Debug.Log("PostGameResults called " + playerNameInput.text + " with scores: " + scoreInput.text);
             StartCoroutine(PostRequestForHighScores(urlBackendHighScores, highScore));
         }
-        
+
     }
 
     //logi:
@@ -137,38 +138,42 @@ public class BackendHandler : MonoBehaviour
 
     IEnumerator GetRequestForHighScores(string uri)
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+      using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+      { 
+        //UnityWebRequest webRequest = new UnityWebRequest(uri);
+        InsertToLog("Request sent to " + uri);
+        // set downloadHandler for json
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+        webRequest.SetRequestHeader("Content-Type", "application/json");
+        webRequest.SetRequestHeader("Accept", "application/json");
+
+        // Request and wait for reply
+        yield return webRequest.SendWebRequest();
+
+
+        if (webRequest.result == UnityWebRequest.Result.ConnectionError)
         {
-            InsertToLog("Request sent to " + uri);
-            // set downloadHandler for json
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", "application/json");
-            webRequest.SetRequestHeader("Accept", "application/json");
-
-            // Request and wait for reply
-            yield return webRequest.SendWebRequest();
+            InsertToLog("Error encountered: " + webRequest.error);
+            Debug.Log("Error: " + webRequest.error);
 
 
-            if (webRequest.isNetworkError)
-            {
-                InsertToLog("Error encountered: " + webRequest.error);
-                Debug.Log("Error: " + webRequest.error);
-            }
-            else
-            {
-                // get raw data and convert it to string
-                string resultStr = System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data);
-
-                // create HighScore item from json string
-                hs = JsonUtility.FromJson<HighScores.HighScores>(resultStr);
-
-                updateHighScoreTextArea = true;
-
-                InsertToLog("Response received succesfully ");
-                Debug.Log("Received(UTF8): " + resultStr);
-                Debug.Log("Received(HS): " + JsonUtility.ToJson(hs));
-            }
         }
+        else
+        {
+            // get raw data and convert it to string
+            string resultStr = System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data);
+
+            //Debug.Log(resultStr);
+            // create HighScore item from json string
+            hs = JsonUtility.FromJson<HighScores.HighScores>(resultStr);
+
+            updateHighScoreTextArea = true;
+
+            InsertToLog("Response received succesfully ");
+            Debug.Log("Received(UTF8): " + resultStr);
+            Debug.Log("Received(HS): " + JsonUtility.ToJson(hs));
+        }
+      }
     }
 
     IEnumerator PostRequestForHighScores(string uri, HighScores.HighScore hsItem)
@@ -198,7 +203,7 @@ public class BackendHandler : MonoBehaviour
 
                 InsertToLog("POST Response received succesfully ");
                 Debug.Log("Received(UTF8): " + resultStr);
-                
+
             }
         }
     }
