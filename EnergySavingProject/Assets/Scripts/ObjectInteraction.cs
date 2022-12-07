@@ -14,7 +14,7 @@ public class ObjectInteraction : MonoBehaviour
 
     void Start()
     {
-        
+        plrBody = GameObject.FindWithTag("Player").transform;   
     }
 
     void Update()
@@ -31,6 +31,16 @@ public class ObjectInteraction : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Interact()
+    {
+        if(StatComponent.Instance)
+            StatComponent.Instance.ChangeCharacterStat(stat, amount);
+        if (GetComponent<PlayAudio>())
+            GetComponent<PlayAudio>().PlayClipAtPoint(0);
+
+        Debug.Log("Interacted");
     }
 
     GameObject getClickedObject(out RaycastHit hit)
