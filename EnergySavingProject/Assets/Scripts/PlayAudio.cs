@@ -9,7 +9,10 @@ public class PlayAudio : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        source = GetComponent<AudioSource>();
+        if (GetComponent<AudioSource>())
+            source = GetComponent<AudioSource>();
+        else
+            source = gameObject.AddComponent<AudioSource>();
     }
 
     public void PlayClipAtPoint(int index)
