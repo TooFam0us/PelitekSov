@@ -13,12 +13,12 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: T_Toilet
-    second: {fileID: 2800000, guid: 6967e715c5f5c0c4a8c98f89f77fb417, type: 3}
+    second: {fileID: 2800000, guid: 9a2eb370248f1ba4aaa89f7e6e4d5764, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: T_Toilet_nor
-    second: {fileID: 2800000, guid: ecd0708e28dae6d47b5b9e68c3e40de3, type: 3}
+    second: {fileID: 2800000, guid: 1f82b5f9a54b20c418c87195eb0b32fb, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
