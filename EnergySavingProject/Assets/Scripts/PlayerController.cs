@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private bool pause = false;
 
     // if too far walk near object
-    // if close enough turn towards object and activate
+    // if close enough turn towards object
 
     void Update()
     {
@@ -23,12 +23,17 @@ public class PlayerController : MonoBehaviour
             // Tutkitaan mitä on klikattu
             Ray moveTo = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(moveTo, out var hitInfo)) { // Onko klikattu objektia
+                if (lookCoroutine != null) StopCoroutine(lookCoroutine);
                 if (hitInfo.collider.CompareTag("Interactable")) { // Onko objekti interactable
                     // Smooooothly rotate to look at interactable item
-                    if (!(agent.remainingDistance > 0))
+                    float distance = Vector3.Distance(plrBody.position, hitInfo.collider.transform.position);
+                    if (distance < 1.5f)
                     {
                         lookCoroutine = StartCoroutine(lookAt(hitInfo.collider.transform));
-                        //agent.SetDestination(hitInfo.point);
+                    }
+                    else
+                    {
+                        agent.SetDestination(hitInfo.point);
                     }
                 }
                 else

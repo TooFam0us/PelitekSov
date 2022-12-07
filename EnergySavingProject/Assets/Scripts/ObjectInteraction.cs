@@ -10,6 +10,7 @@ public class ObjectInteraction : MonoBehaviour
     public GameObject obj;
     public float amount;
     public StatComponent.CharacterStat stat;
+    public Transform plrBody;
 
     void Start()
     {
@@ -22,8 +23,12 @@ public class ObjectInteraction : MonoBehaviour
         {
             if (obj == getClickedObject(out RaycastHit hit))
             {
-                // Change stats
-                StatComponent.Instance.ChangeCharacterStat(stat, amount);
+                if (Vector3.Distance(hit.transform.position, plrBody.transform.position) < 1.5f)
+                {
+                    // Change stats
+                    // StatComponent.Instance.ChangeCharacterStat(stat, amount);
+                    Debug.Log("ASASAAAA");
+                }
             }
         }
     }
@@ -36,7 +41,7 @@ public class ObjectInteraction : MonoBehaviour
         {
             //if (!isCursorOverUI())
             //{
-             target = hit.collider.gameObject;
+            target = hit.collider.gameObject;
             //}
         }
         return target;
