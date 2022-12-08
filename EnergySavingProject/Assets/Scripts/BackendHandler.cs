@@ -191,7 +191,7 @@ public class BackendHandler : MonoBehaviour
             yield return webRequest.SendWebRequest();
 
 
-            if (webRequest.isNetworkError)
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError)
             {
                 InsertToLog("Error encountered in POST request: " + webRequest.error);
                 Debug.Log("Error: " + webRequest.error);

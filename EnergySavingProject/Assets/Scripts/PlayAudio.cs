@@ -17,6 +17,7 @@ public class PlayAudio : MonoBehaviour
 
     public void PlayClipAtPoint(int index)
     {
-        source.PlayOneShot(audioClips[index]);
+        if(!source.isPlaying)
+            source.PlayOneShot(audioClips[index]);
     }
 }

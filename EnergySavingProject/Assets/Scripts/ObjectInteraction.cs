@@ -10,6 +10,7 @@ public class ObjectInteraction : MonoBehaviour
     public GameObject obj;
     public float amount;
     public StatComponent.CharacterStat stat;
+    public float elecConsumption;
     public Transform plrBody;
 
     void Start()
@@ -36,7 +37,10 @@ public class ObjectInteraction : MonoBehaviour
     public void Interact()
     {
         if(StatComponent.Instance)
+        {
             StatComponent.Instance.ChangeCharacterStat(stat, amount);
+            StatComponent.Instance.ConsumeElectricity(elecConsumption);
+        }
         if (GetComponent<PlayAudio>())
             GetComponent<PlayAudio>().PlayClipAtPoint(0);
 
