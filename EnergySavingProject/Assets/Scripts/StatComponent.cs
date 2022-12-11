@@ -16,6 +16,11 @@ public class StatComponent : MonoBehaviour
         Education
     }
 
+    public float totalEnergyConsumed = 0;
+
+    [SerializeField]
+    float budget = 50;
+
     Dictionary<CharacterStat, float> CharacterStats = new();
 
     private void Start()
@@ -31,15 +36,26 @@ public class StatComponent : MonoBehaviour
                 um.UpdateStats((int)stat ,CharacterStats[stat]);
             }
         }
+        um.UpdateBudget(budget);
+        um.UpdateEnergyConsumed(totalEnergyConsumed);
     }
 
+    public void ConsumeElectricity(float eConsumption)
+    {
 
+        totalEnergyConsumed += eConsumption;
+        budget -= eConsumption * gm.GetCurrentElectricityPrice();
+        if (budget < 0)
+            gm.GameEnded();
+        um.UpdateBudget(budget);
+        um.UpdateEnergyConsumed(totalEnergyConsumed);
+    }
 
     public void ChangeCharacterStat(CharacterStat stat, float change)
     {
         if(CharacterStats.ContainsKey(stat))
         {
-            CharacterStats[stat] += change;
+            CharacterStats[stat] = CharacterStats[stat] + change >= 100 ? 100 : CharacterStats[stat] + change;
             um.UpdateStats((int)stat, CharacterStats[stat]);
             if (CharacterStats[stat] < gm.statMinThreshold)
             {

@@ -39,6 +39,8 @@ public class TimeHandler : MonoBehaviour
         if(gameTimeHours % gm.intervalBetweenStatChanges == 0 && gameTimeHours > pastCheck)
         {
             StatComponent.Instance.ChangeAllStats(Random.Range(-3, -8));
+            GameManager.Instance.SetCurrentEnergyPrice(gameTimeDays, gameTimeHours % 24);
+            UIManager.Instance.UpdatePrice(GameManager.Instance.GetCurrentElectricityPrice());
             pastCheck = gameTimeHours;
         }
         if(gameTimeDays >= gm.daysToWinGame)
