@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -16,6 +17,12 @@ public class UIManager : MonoBehaviour
     public void UpdateClock(string msg)
     {
         clock.text = msg;
+    }
+
+    public void GameEndedUI()
+    {
+        int score = Mathf.FloorToInt(TimeHandler.Instance.GetTime() / 10000) * Mathf.FloorToInt(StatComponent.Instance.GetStatParams() / 50) * Mathf.FloorToInt(StatComponent.Instance.GetBudget() * 10);
+        endScreen.SetActive(true);
     }
 
     public void UpdateStats(int i, float amount)
@@ -36,6 +43,26 @@ public class UIManager : MonoBehaviour
     public void UpdateEnergyConsumed(float consumed)
     {
         energyConsumed.text = consumed.ToString("F") + " kW consumed";
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void HighScores()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     //Singleton

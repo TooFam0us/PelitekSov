@@ -9,7 +9,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Transform plr;
 
-    private float camDistance = -3f;
+    private float camDistance = -6f;
     private Vector3 previousPosition;
     private float prevX;
     private const float maxX = 85;
@@ -79,14 +79,14 @@ public class CameraMovement : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-            if (camDistance < -1.5f)
+            if (camDistance < -3.5f)
             {
                 camDistance += 0.5f;
             }
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            if (camDistance > -3.5f)
+            if (camDistance > -7.5f)
             {
                 camDistance -= 0.5f;
             }

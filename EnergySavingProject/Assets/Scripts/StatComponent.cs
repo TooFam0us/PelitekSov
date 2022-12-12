@@ -13,13 +13,13 @@ public class StatComponent : MonoBehaviour
     { 
         Hunger,
         Happiness,
-        Education
+        Hygiene
     }
 
     public float totalEnergyConsumed = 0;
 
     [SerializeField]
-    float budget = 50;
+    float budget = 20;
 
     Dictionary<CharacterStat, float> CharacterStats = new();
 
@@ -82,6 +82,24 @@ public class StatComponent : MonoBehaviour
                 }
             }
         }
+    }
+
+    public float GetStatParams()
+    {
+        float statPoints = 0;
+        foreach (CharacterStat stat in Enum.GetValues(typeof(CharacterStat)))
+        {
+            if (!CharacterStats.ContainsKey(stat))
+            {
+                statPoints += CharacterStats[stat];
+            }
+        }
+        return statPoints;
+    }
+
+    public float GetBudget()
+    {
+        return budget;
     }
 
 

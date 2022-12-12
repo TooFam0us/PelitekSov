@@ -20,14 +20,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        SetCurrentEnergyPrice(0, 0);
         um = UIManager.Instance;
-        for (int i = 0; i < energyPriceTable.Length; i++)
-        {
-            energyPriceTable[i] = new();
-        }
-        StartCoroutine(GetComponent<ReadCSV>().ReadCSVFile());
-        currentEnergyPrice = energyPriceTable[0].GetValueOrDefault(0);
-        UIManager.Instance.UpdatePrice(GetCurrentElectricityPrice());
+        um.UpdatePrice(GetCurrentElectricityPrice());
     }
 
     public void SetCurrentEnergyPrice(int index, int time)
@@ -60,7 +55,7 @@ public class GameManager : MonoBehaviour
     public void GameEnded()
     {
         gameEnded = true;
-        um.endScreen.SetActive(true);
+        um.GameEndedUI();
     }
 
     public bool IsGameOver()
@@ -80,5 +75,11 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        for (int i = 0; i < energyPriceTable.Length; i++)
+        {
+            energyPriceTable[i] = new();
+        }
+        StartCoroutine(GetComponent<ReadCSV>().ReadCSVFile());
     }
 }

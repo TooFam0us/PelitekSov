@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.IsGameOver())
+            return;
         if (Input.GetMouseButtonDown(0)) // M1 klikattu
         {
             // Tutkitaan mitä on klikattu
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour
                     hitObject = hitInfo.collider.gameObject.GetComponent<ObjectInteraction>();
                     isMoving = true;
                     float distance = Vector3.Distance(transform.position, hitInfo.collider.transform.position);
-                    if (distance < 1.5f)
+                    if (distance < 2f)
                     {
                         lookCoroutine = StartCoroutine(lookAt(hitInfo.collider.transform));
                     }
@@ -55,7 +57,8 @@ public class PlayerController : MonoBehaviour
 
         if (isMoving && hitObject)
         {
-            if (Vector3.Distance(transform.position, hitObject.transform.position) < 1.5f)
+            Debug.Log(Vector3.Distance(transform.position, hitObject.transform.position));
+            if (Vector3.Distance(transform.position, hitObject.transform.position) < 2f)
             {
                 hitObject.Interact();
                 hitObject = null;

@@ -16,23 +16,12 @@ public class ObjectInteraction : MonoBehaviour
     void Start()
     {
         plrBody = GameObject.FindWithTag("Player").transform;   
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
+        if(!obj)
         {
-            if (obj == getClickedObject(out RaycastHit hit))
-            {
-                if (Vector3.Distance(hit.transform.position, plrBody.transform.position) < 1.5f)
-                {
-                    // Change stats
-                    // StatComponent.Instance.ChangeCharacterStat(stat, amount);
-                    Debug.Log("ASASAAAA");
-                }
-            }
+            obj = gameObject;
         }
     }
+
 
     public void Interact()
     {

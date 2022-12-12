@@ -48,4 +48,24 @@ public class TimeHandler : MonoBehaviour
             gm.WinGame();
         }
     }
+
+    public float GetTime()
+    {
+        return timeInSeconds;
+    }
+
+
+    //Singleton
+    public static TimeHandler Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 }

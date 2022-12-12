@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ReadCSV : MonoBehaviour
 {
-    string fileName = "Assets/Scripts/EnergyPricesData.csv";
+    string fileName = Application.dataPath + "/StreamingAssets/EnergyPricesData.csv";
     // Start is called before the first frame update
 
     public IEnumerator ReadCSVFile()
@@ -51,6 +51,7 @@ public class ReadCSV : MonoBehaviour
                 GameManager.Instance.AddDataToPriceTable(dayIndex, hour, price/10000);
             }
         }
+        strReader.Close();
         yield return null;
     }
 }
