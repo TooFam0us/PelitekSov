@@ -48,7 +48,7 @@ public class ReadCSV : MonoBehaviour
                     started = false;
 
                 }
-                GameManager.Instance.AddDataToPriceTable(dayIndex, hour, price/1000);
+                GameManager.Instance.AddDataToPriceTable(dayIndex, hour, price/10000);
             }
         }
         strReader.Close();

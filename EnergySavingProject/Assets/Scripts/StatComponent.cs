@@ -46,7 +46,7 @@ public class StatComponent : MonoBehaviour
         totalEnergyConsumed += eConsumption;
         budget -= eConsumption * gm.GetCurrentElectricityPrice();
         if (budget < 0)
-            gm.GameEnded();
+            gm.GameEnded(false);
         um.UpdateBudget(budget);
         um.UpdateEnergyConsumed(totalEnergyConsumed);
     }
@@ -89,7 +89,7 @@ public class StatComponent : MonoBehaviour
         float statPoints = 0;
         foreach (CharacterStat stat in Enum.GetValues(typeof(CharacterStat)))
         {
-            if (!CharacterStats.ContainsKey(stat))
+            if (CharacterStats.ContainsKey(stat))
             {
                 statPoints += CharacterStats[stat];
             }

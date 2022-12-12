@@ -38,7 +38,7 @@ public class TimeHandler : MonoBehaviour
         // Subjects to change every 2 hour (game-tick) (stats, electricity costs)
         if(gameTimeHours % gm.intervalBetweenStatChanges == 0 && gameTimeHours > pastCheck)
         {
-            StatComponent.Instance.ChangeAllStats(Random.Range(-3, -8));
+            StatComponent.Instance.ChangeAllStats(Random.Range(-10, -20));
             GameManager.Instance.SetCurrentEnergyPrice(gameTimeDays, gameTimeHours % 24);
             UIManager.Instance.UpdatePrice(GameManager.Instance.GetCurrentElectricityPrice());
             pastCheck = gameTimeHours;

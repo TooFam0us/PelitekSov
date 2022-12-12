@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,10 +9,12 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public TextMeshProUGUI endText;
     public TextMeshProUGUI clock;
     public TextMeshProUGUI energy;
     public TextMeshProUGUI budget;
     public TextMeshProUGUI energyConsumed;
+    public TextMeshProUGUI scoreText;
     public GameObject endScreen;
     public GameObject[] statSliders;
 
@@ -19,9 +23,13 @@ public class UIManager : MonoBehaviour
         clock.text = msg;
     }
 
-    public void GameEndedUI()
+    public void GameEndedUI(bool won)
     {
-        int score = Mathf.FloorToInt(TimeHandler.Instance.GetTime() / 10000) * Mathf.FloorToInt(StatComponent.Instance.GetStatParams() / 50) * Mathf.FloorToInt(StatComponent.Instance.GetBudget() * 10);
+        int score = Mathf.FloorToInt(TimeHandler.Instance.GetTime() / 100) > 1 ? Mathf.FloorToInt(TimeHandler.Instance.GetTime() / 100) : 1 * 
+            Mathf.FloorToInt(StatComponent.Instance.GetStatParams() / 20) > 1 ? Mathf.FloorToInt(StatComponent.Instance.GetStatParams() / 50) : 1 * 
+            Mathf.FloorToInt(StatComponent.Instance.GetBudget() * 10) > 1 ? Mathf.FloorToInt(StatComponent.Instance.GetBudget() * 10) : 1;
+        endText.text = won ? "You won the game, congratz" : "You lost the game unfortunately, try again";
+        scoreText.text = "Your score: " + score.ToString() + " points";
         endScreen.SetActive(true);
     }
 
@@ -32,17 +40,17 @@ public class UIManager : MonoBehaviour
 
     public void UpdatePrice(float price)
     {
-        energy.text = price.ToString("F") + "€/kWh";
+        energy.text = Convert.ToDecimal(price.ToString("F"), new CultureInfo("en-US")) + "€/kWh";
     }
 
     public void UpdateBudget(float budg)
     {
-        budget.text = budg.ToString("F") + " € left";
+        budget.text = Convert.ToDecimal(budg.ToString("F"), new CultureInfo("en-US")) + " € left";
     }
 
     public void UpdateEnergyConsumed(float consumed)
     {
-        energyConsumed.text = consumed.ToString("F") + " kW consumed";
+        energyConsumed.text = Convert.ToDecimal(consumed.ToString("F"), new CultureInfo("en-US")) + " kW consumed";
     }
 
     public void MainMenu()

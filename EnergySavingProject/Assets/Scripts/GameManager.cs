@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     public void WinGame()
     {
         Debug.Log("Win");
-        GameEnded();
+        GameEnded(true);
     }
 
     public void AddDataToPriceTable(int index, int time, float amount)
@@ -49,13 +49,13 @@ public class GameManager : MonoBehaviour
     public void LoseGame()
     {
         Debug.Log("Lost");
-        GameEnded();
+        GameEnded(false);
     }
 
-    public void GameEnded()
+    public void GameEnded(bool won)
     {
         gameEnded = true;
-        um.GameEndedUI();
+        um.GameEndedUI(won);
     }
 
     public bool IsGameOver()
