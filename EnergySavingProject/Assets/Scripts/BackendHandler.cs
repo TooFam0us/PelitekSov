@@ -21,8 +21,8 @@ public class BackendHandler : MonoBehaviour
     "] }";
 
 
-    const string urlBackendHighScoresFile = "http://172.30.139.22/~narvanen/highscores.json";
-    const string urlBackendHighScores = "http://172.30.139.22/~narvanen/highscores.php";
+    const string urlBackendHighScoresFile = "http://172.30.139.22/~narvanen/api/v1/highscores.json";
+    const string urlBackendHighScores = "http://172.30.139.22/~narvanen/api/v1/highscores.php";
 
 
 
