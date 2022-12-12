@@ -3171,6 +3171,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5232780054134794008, guid: ae4d41388e5c6e24ebc787f888d2d9fd, type: 3}
+      propertyPath: daysToWinGame
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232780054134794008, guid: ae4d41388e5c6e24ebc787f888d2d9fd, type: 3}
+      propertyPath: intervalBetweenStatChanges
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5232780054134794009, guid: ae4d41388e5c6e24ebc787f888d2d9fd, type: 3}
       propertyPath: m_Name
       value: GameManager
