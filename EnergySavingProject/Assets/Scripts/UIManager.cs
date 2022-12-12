@@ -40,17 +40,17 @@ public class UIManager : MonoBehaviour
 
     public void UpdatePrice(float price)
     {
-        energy.text = Convert.ToDecimal(price.ToString("F"), new CultureInfo("en-US")) + "€/kWh";
+        energy.text = decimal.Parse(price.ToString("F"), new NumberFormatInfo() { NumberDecimalSeparator = "." }) + "€/kWh";
     }
 
     public void UpdateBudget(float budg)
     {
-        budget.text = Convert.ToDecimal(budg.ToString("F"), new CultureInfo("en-US")) + " € left";
+        budget.text = decimal.Parse(budg.ToString("F"), new NumberFormatInfo() { NumberDecimalSeparator = "." }) + " € left";
     }
 
     public void UpdateEnergyConsumed(float consumed)
     {
-        energyConsumed.text = Convert.ToDecimal(consumed.ToString("F"), new CultureInfo("en-US")) + " kW consumed";
+        energyConsumed.text = decimal.Parse(consumed.ToString("F"), new NumberFormatInfo() { NumberDecimalSeparator = "." }) + " kW consumed";
     }
 
     public void MainMenu()
